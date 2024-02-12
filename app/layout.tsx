@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { fonts } from "@/utils/fonts";
 import ChakraProvider from "@/providers/chakra-provider";
 
+import Header from "@/components/header";
+
 export const metadata: Metadata = {
   title: "Jollybyte",
   description:
@@ -19,7 +21,10 @@ export default function RootLayout({
       className={`${fonts.brice.variable} ${fonts.raleway.variable}`}
     >
       <body>
-        <ChakraProvider>{children}</ChakraProvider>
+        <ChakraProvider>
+          <Header />
+          {children}
+        </ChakraProvider>
       </body>
     </html>
   );
