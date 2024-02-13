@@ -29,7 +29,10 @@ const Header = () => {
           </Box>
           {isMediumBreakpoint ? (
             <>
-              <HStack gap={{ md: "8", lg: "16" }}>
+              <HStack
+                gap={{ md: "8", lg: "16" }}
+                display={{ base: "none", md: "flex" }}
+              >
                 <Box as={NextLink} href="/" fontSize={{ md: "xl", lg: "2xl" }}>
                   home
                 </Box>
@@ -53,6 +56,7 @@ const Header = () => {
                 href="/menu"
                 variant="primary"
                 fontSize={{ md: "xl", lg: "2xl" }}
+                display={{ base: "none", md: "inline-flex" }}
               >
                 menu
               </Button>
@@ -64,6 +68,7 @@ const Header = () => {
                 aria-label="Options"
                 icon={<HamburgerIcon />}
                 variant="outline"
+                rounded="md"
                 _hover={{ bg: "brand.foreground" }}
                 _active={{ bg: "brand.foreground" }}
               />

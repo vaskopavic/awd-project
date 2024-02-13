@@ -21,7 +21,7 @@ const HeroSection = () => {
         <Button
           as={NextLink}
           href="/menu"
-          variant="primary"
+          variant="secondary"
           fontSize={{ md: "lg" }}
         >
           order now
