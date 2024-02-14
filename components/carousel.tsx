@@ -7,6 +7,10 @@ import "slick-carousel/slick/slick-theme.css";
 
 import Card from "./card";
 
+interface CarouselProps {
+  data: IMenu[];
+}
+
 const PrevArrow = ({ className, style, onClick }: any) => {
   return (
     <ChevronLeftIcon
@@ -37,7 +41,9 @@ const NextArrow = ({ className, style, onClick }: any) => {
   );
 };
 
-const Carousel = () => {
+const Carousel = (props: CarouselProps) => {
+  const { data } = props;
+
   var settings = {
     dots: true,
     slidesToShow: 3,
@@ -63,9 +69,9 @@ const Carousel = () => {
 
   return (
     <Slider {...settings}>
-      <Card />
-      <Card />
-      <Card />
+      {data.map((item) => (
+        <Card key={item.id} data={item} />
+      ))}
     </Slider>
   );
 };

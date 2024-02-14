@@ -1,8 +1,22 @@
+import { useEffect, useState } from "react";
 import { Box, VStack, Heading, Text } from "@chakra-ui/react";
 
 import Carousel from "../carousel";
 
 const MostPopularOrders = () => {
+  const [mostPopularOrders, setMostPopularOrders] = useState<IMenu[]>([]);
+
+  useEffect(() => {
+    const fetchMostPopularOrders = async () => {
+      const response = await fetch("/api/menu/most-popular-orders");
+      const data: IMenu[] = await response.json();
+
+      setMostPopularOrders(data);
+    };
+
+    fetchMostPopularOrders();
+  }, []);
+
   return (
     <Box my="20">
       <VStack textAlign="center" mb="8">
@@ -18,7 +32,7 @@ const MostPopularOrders = () => {
           everyone loves them!
         </Text>
       </VStack>
-      <Carousel />
+      <Carousel data={mostPopularOrders} />
     </Box>
   );
 };

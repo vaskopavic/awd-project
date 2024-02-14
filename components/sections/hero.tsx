@@ -5,7 +5,7 @@ const HeroSection = () => {
   return (
     <Stack
       h="100%"
-      flexDir={{ base: "column", md: "row" }}
+      direction={{ base: "column", md: "row" }}
       alignItems="center"
       justifyContent="center"
       gap="4"
