@@ -25,7 +25,7 @@ const Header = () => {
       <Container maxW="container.xl">
         <HStack alignItems="center" justifyContent="space-between" py="8">
           <Box as={NextLink} href="/">
-            <Image w="200px" src="logo.svg" />
+            <Image w="200px" src="logo.svg" alt="Logo" />
           </Box>
           {isMediumBreakpoint ? (
             <>

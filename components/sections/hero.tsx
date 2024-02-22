@@ -30,8 +30,8 @@ const HeroSection = () => {
       <Image
         src="hero.png"
         alt="Hand reaching for a burger"
-        w={{ base: "xs", md: "sm", lg: "65vh" }}
-        h={{ base: "xs", md: "sm", lg: "65vh" }}
+        w={{ base: "35vh", md: "40vh", lg: "60vh" }}
+        h={{ base: "35vh", md: "40vh", lg: "60vh" }}
         objectFit="cover"
         order={{ base: -1, md: 1 }}
         mb={{ base: "12", md: "0" }}

@@ -43,6 +43,10 @@ export const theme = extendTheme({
           color: "brand.white",
           backgroundColor: "brand.base",
         },
+        _active: {
+          color: "brand.white",
+          backgroundColor: "brand.base",
+        },
       },
       variants: {
         primary: () => ({
@@ -50,9 +54,18 @@ export const theme = extendTheme({
             backgroundColor: "brand.primary",
             borderColor: "brand.primary",
           },
+          _active: {
+            backgroundColor: "brand.primary",
+            borderColor: "brand.primary",
+          },
         }),
         secondary: () => ({
           _hover: {
+            color: "brand.black",
+            backgroundColor: "brand.secondary",
+            borderColor: "brand.secondary",
+          },
+          _active: {
             color: "brand.black",
             backgroundColor: "brand.secondary",
             borderColor: "brand.secondary",
