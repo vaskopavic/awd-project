@@ -3,6 +3,7 @@ import { fonts } from "@/utils/fonts";
 import ChakraProvider from "@/providers/chakra-provider";
 
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "Jollybyte",
@@ -24,6 +25,7 @@ export default function RootLayout({
         <ChakraProvider>
           <Header />
           {children}
+          <Footer />
         </ChakraProvider>
       </body>
     </html>

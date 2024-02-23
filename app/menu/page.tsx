@@ -51,16 +51,17 @@ export default function Page() {
   };
 
   return (
-    <VStack bg="brand.foreground" h="calc(100vh - 110px)">
+    <VStack bg="brand.foreground" h="fit" minH="90vh">
       <Container maxW="container.xl" p="4" my="8">
-        <VStack gap="4" alignItems="start">
-          <VStack alignItems="start" mb={{ md: "4" }}>
+        <VStack gap="4" alignItems={{ base: "center", md: "start" }}>
+          <VStack alignItems={{ base: "center", md: "start" }} mb={{ md: "4" }}>
             <Heading as="h2" size="xl">
               BROWSE OUR KITCHEN
             </Heading>
             <Text
               fontSize={{ md: "lg" }}
               maxW={{ base: "container.sm", md: "container.lg" }}
+              textAlign={{ base: "center", md: "start" }}
             >
               Our menu is full of delicious options. We have something for
               everyone, so take a look and see what you like!
@@ -68,9 +69,9 @@ export default function Page() {
           </VStack>
           <Stack direction={{ base: "column", md: "row" }} gap="4">
             <Stack
-              position="relative"
               direction={{ base: "row", md: "column" }}
               gap="4"
+              mb={{ base: "4" }}
             >
               {categories.map((category) => {
                 const isActive = selectedCategory === category;
@@ -93,8 +94,7 @@ export default function Page() {
               spacing={10}
               overflowY="scroll"
               w="full"
-              maxH="80vh"
-              m="auto"
+              maxH="75vh"
               ref={menuContainerRef}
               sx={{
                 "::-webkit-scrollbar": {

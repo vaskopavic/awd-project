@@ -4,6 +4,7 @@ import { Container, VStack } from "@chakra-ui/react";
 
 import HeroSection from "@/components/sections/hero";
 import MostPopularOrders from "@/components/sections/most-popular-orders";
+import Article from "@/components/sections/article";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <VStack bg="brand.foreground">
         <Container maxW="container.xl" mb="32" p="4">
           <MostPopularOrders />
+          <Article />
         </Container>
       </VStack>
     </>
