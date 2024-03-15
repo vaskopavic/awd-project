@@ -8,7 +8,6 @@ import {
   Container,
   Heading,
   Text,
-  ButtonGroup,
   Button,
 } from "@chakra-ui/react";
 
@@ -76,31 +75,23 @@ export default function Page() {
               {categories.map((category) => {
                 const isActive = selectedCategory === category;
                 return (
-                  <ButtonGroup key={category} size="sm">
-                    <Button
-                      variant="base"
-                      fontSize={{ md: "md" }}
-                      onClick={() => handleCategoryClick(category)}
-                      isActive={isActive}
-                    >
-                      {category}
-                    </Button>
-                  </ButtonGroup>
+                  <Button
+                    key={category}
+                    variant="base"
+                    fontSize={{ md: "md" }}
+                    onClick={() => handleCategoryClick(category)}
+                    isActive={isActive}
+                  >
+                    {category}
+                  </Button>
                 );
               })}
             </Stack>
             <SimpleGrid
               columns={{ base: 1, md: 2, lg: 3 }}
               spacing={10}
-              overflowY="scroll"
               w="full"
-              maxH="75vh"
               ref={menuContainerRef}
-              sx={{
-                "::-webkit-scrollbar": {
-                  display: "none",
-                },
-              }}
             >
               {filteredMenu.map((item) => {
                 return <Card key={item.id} data={item} />;

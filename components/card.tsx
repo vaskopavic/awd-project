@@ -1,4 +1,13 @@
-import { Stack, Heading, Text, Button, Image } from "@chakra-ui/react";
+import {
+  Stack,
+  Heading,
+  Text,
+  Button,
+  Image,
+  useToast,
+} from "@chakra-ui/react";
+
+import { useShoppingCart } from "@/providers/shopping-cart-provider";
 
 interface CardProps {
   data: IMenu;
@@ -6,6 +15,19 @@ interface CardProps {
 
 const Card = (props: CardProps) => {
   const { name, description, image, price } = props.data;
+  const { increaseCartQuantity } = useShoppingCart();
+  const toast = useToast();
+
+  const handleAddToOrder = () => {
+    increaseCartQuantity({ ...props.data, quantity: 1 });
+
+    toast({
+      description: `${name} has been added to your order!`,
+      status: "success",
+      duration: 1000,
+      isClosable: true,
+    });
+  };
 
   return (
     <Stack
@@ -48,7 +70,11 @@ const Card = (props: CardProps) => {
         <Text noOfLines={2} mb="2">
           {description}
         </Text>
-        <Button variant="secondary" fontSize={{ md: "lg" }}>
+        <Button
+          variant="secondary"
+          fontSize={{ md: "lg" }}
+          onClick={handleAddToOrder}
+        >
           add to order
         </Button>
       </Stack>

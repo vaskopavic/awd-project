@@ -15,7 +15,28 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 
+import OrderDrawer from "./order-drawer";
+
+import { useShoppingCart } from "@/providers/shopping-cart-provider";
+
 import useMediaQuery from "@/hooks/use-media-query";
+
+const NotificationDot = () => {
+  const { cartItems } = useShoppingCart();
+
+  return (
+    <Box
+      position="absolute"
+      top="10%"
+      right="-8%"
+      width="8px"
+      height="8px"
+      bg="brand.primaryShade"
+      rounded="full"
+      display={cartItems.length > 0 ? "block" : "none"}
+    ></Box>
+  );
+};
 
 const Header = () => {
   const isMediumBreakpoint = useMediaQuery(768);
@@ -43,11 +64,12 @@ const Header = () => {
                 about
               </Box>
               <Box
-                as={NextLink}
-                href="/order"
+                position="relative"
                 fontSize={{ md: "xl", lg: "2xl" }}
+                _hover={{ cursor: "pointer" }}
               >
-                my order
+                <OrderDrawer />
+                <NotificationDot />
               </Box>
             </HStack>
             <Button
@@ -89,12 +111,10 @@ const Header = () => {
                 about
               </MenuItem>
               <MenuItem
-                as={NextLink}
-                href="/order"
                 bg="brand.foreground"
-                _hover={{ bg: "brand.background" }}
+                _hover={{ cursor: "pointer", bg: "brand.background" }}
               >
-                my order
+                <OrderDrawer />
               </MenuItem>
               <MenuItem
                 as={NextLink}

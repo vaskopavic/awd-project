@@ -21,8 +21,11 @@ export const theme = extendTheme({
       background: "#F9F4E1",
       foreground: "#FEFBF2",
       base: "#313131",
+      baseShade: "#222222",
       primary: "#D85B49",
+      primaryShade: "#C25242",
       secondary: "#D7F74E",
+      secondaryShade: "#C2DE46",
     },
   },
   fonts: {
@@ -45,7 +48,7 @@ export const theme = extendTheme({
         },
         _active: {
           color: "brand.white",
-          backgroundColor: "brand.base",
+          backgroundColor: "brand.baseShade",
         },
       },
       variants: {
@@ -55,8 +58,8 @@ export const theme = extendTheme({
             borderColor: "brand.primary",
           },
           _active: {
-            backgroundColor: "brand.primary",
-            borderColor: "brand.primary",
+            backgroundColor: "brand.primaryShade",
+            borderColor: "brand.primaryShade",
           },
         }),
         secondary: () => ({
@@ -67,8 +70,21 @@ export const theme = extendTheme({
           },
           _active: {
             color: "brand.black",
-            backgroundColor: "brand.secondary",
-            borderColor: "brand.secondary",
+            backgroundColor: "brand.secondaryShade",
+            borderColor: "brand.secondaryShade",
+          },
+        }),
+        tertiary: () => ({
+          color: "brand.black",
+          border: "none",
+          backgroundColor: "blackAlpha.100",
+          _hover: {
+            color: "brand.black",
+            backgroundColor: "blackAlpha.200",
+          },
+          _active: {
+            color: "brand.black",
+            backgroundColor: "blackAlpha.300",
           },
         }),
       },

@@ -12,49 +12,56 @@ import {
 } from "@chakra-ui/react";
 import { FaFacebook, FaInstagram, FaXTwitter } from "react-icons/fa6";
 
+import OrderDrawer from "./order-drawer";
+
 const Footer = () => {
   return (
     <Container maxW="container.xl" bg="brand.background">
       <HStack
         alignItems="end"
         justifyContent="space-between"
-        py={{ base: "4", md: "24" }}
+        pt={{ base: "16", md: "24" }}
+        pb={{ base: "8", md: "16" }}
       >
         <VStack
           display={{ base: "none", md: "flex" }}
           alignItems={{ base: "center", md: "start" }}
           justifyContent="center"
+          gap="4"
         >
-          <HStack gap="4">
+          <HStack gap="6">
             <Box as={NextLink} href="/" fontSize={{ md: "lg", lg: "xl" }}>
               home
             </Box>
             <Box as={NextLink} href="/about" fontSize={{ md: "lg", lg: "xl" }}>
               about
             </Box>
-            <Box as={NextLink} href="/order" fontSize={{ md: "lg", lg: "xl" }}>
-              my order
+            <Box
+              fontSize={{ md: "lg", lg: "xl" }}
+              _hover={{ cursor: "pointer" }}
+            >
+              <OrderDrawer />
             </Box>
             <Box as={NextLink} href="/menu" fontSize={{ md: "lg", lg: "xl" }}>
               menu
             </Box>
           </HStack>
-          <HStack>
+          <HStack gap="4">
             <Icon
               as={FaFacebook}
-              boxSize={6}
+              boxSize={7}
               color="brand.black"
               _hover={{ cursor: "pointer" }}
             />
             <Icon
               as={FaInstagram}
-              boxSize={6}
+              boxSize={7}
               color="brand.black"
               _hover={{ cursor: "pointer" }}
             />
             <Icon
               as={FaXTwitter}
-              boxSize={6}
+              boxSize={7}
               color="brand.black"
               _hover={{ cursor: "pointer" }}
             />
@@ -64,19 +71,19 @@ const Footer = () => {
               fontSize="sm"
               _hover={{ cursor: "pointer", textDecoration: "underline" }}
             >
-              Privacy statement
+              privacy statement
             </Text>
             <Text
               fontSize="sm"
               _hover={{ cursor: "pointer", textDecoration: "underline" }}
             >
-              Terms & conditions
+              terms & conditions
             </Text>
             <Text
               fontSize="sm"
               _hover={{ cursor: "pointer", textDecoration: "underline" }}
             >
-              Cookie policy
+              cookie policy
             </Text>
           </HStack>
         </VStack>

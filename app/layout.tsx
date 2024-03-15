@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { fonts } from "@/utils/fonts";
 import ChakraProvider from "@/providers/chakra-provider";
+import { ShoppingCartProvider } from "@/providers/shopping-cart-provider";
 
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -23,9 +24,11 @@ export default function RootLayout({
     >
       <body>
         <ChakraProvider>
-          <Header />
-          {children}
-          <Footer />
+          <ShoppingCartProvider>
+            <Header />
+            {children}
+            <Footer />
+          </ShoppingCartProvider>
         </ChakraProvider>
       </body>
     </html>
