@@ -96,7 +96,7 @@ const OrderDrawer = () => {
                     <HStack w="full">
                       <Image
                         src={cartItem.image}
-                        alt=""
+                        alt={`${cartItem.name} image`}
                         w="124px"
                         h="124px"
                         rounded="lg"

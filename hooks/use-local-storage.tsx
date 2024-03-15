@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 
 const useLocalStorage = <T,>(key: string, initialValue: T | (() => T)) => {
+  const isClient = typeof window !== "undefined";
+
   const [value, setValue] = useState<T>(() => {
-    const jsonValue = localStorage.getItem(key);
-    if (jsonValue != null) return JSON.parse(jsonValue);
+    if (isClient) {
+      const jsonValue = localStorage.getItem(key);
+      if (jsonValue != null) return JSON.parse(jsonValue);
+    }
 
     if (typeof initialValue === "function") {
       return (initialValue as () => T)();
@@ -11,8 +15,10 @@ const useLocalStorage = <T,>(key: string, initialValue: T | (() => T)) => {
   });
 
   useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(value));
-  }, [key, value]);
+    if (isClient) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+  }, [key, value, isClient]);
 
   return [value, setValue] as [typeof value, typeof setValue];
 };
