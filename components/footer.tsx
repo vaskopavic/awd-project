@@ -89,7 +89,7 @@ const Footer = () => {
         </VStack>
         <VStack w={{ base: "full", md: "max" }}>
           <Box as={NextLink} href="/">
-            <Image w="200px" src="logo.svg" />
+            <Image w="192px" src="logo.svg" alt="Logo" />
           </Box>
           <Text>&#169; {new Date().getFullYear()}. All rights reserved.</Text>
         </VStack>

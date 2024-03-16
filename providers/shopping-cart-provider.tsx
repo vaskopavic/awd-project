@@ -14,6 +14,7 @@ interface ShoppingCartContext {
   decreaseCartQuantity: (item: CartItem) => void;
   removeFromCart: (item: CartItem) => void;
   cartQuantity: number;
+  cartTotal: number;
   cartItems: CartItem[];
 }
 
@@ -39,6 +40,10 @@ export const ShoppingCartProvider = ({
     (quantity, item) => item.quantity + quantity,
     0
   );
+
+  const cartTotal = cartItems
+    .reduce((total, item) => item.price * item.quantity + total, 2.49)
+    .toFixed(2) as unknown as number;
 
   const getItemQuantity = (id: string) => {
     return cartItems.find((item) => item.id === id)?.quantity || 0;
@@ -84,6 +89,7 @@ export const ShoppingCartProvider = ({
         increaseCartQuantity,
         removeFromCart,
         cartItems,
+        cartTotal,
         cartQuantity,
       }}
     >

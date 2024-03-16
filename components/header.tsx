@@ -5,6 +5,7 @@ import {
   Container,
   HStack,
   Box,
+  Badge,
   Button,
   Image,
   Menu,
@@ -21,20 +22,20 @@ import { useShoppingCart } from "@/providers/shopping-cart-provider";
 
 import useMediaQuery from "@/hooks/use-media-query";
 
-const NotificationDot = () => {
-  const { cartItems } = useShoppingCart();
+const NotificationBadge = () => {
+  const { cartQuantity } = useShoppingCart();
 
   return (
-    <Box
+    <Badge
       position="absolute"
-      top="10%"
+      top="8%"
       right="-8%"
       width="8px"
       height="8px"
       bg="brand.primaryShade"
       rounded="full"
-      display={cartItems.length > 0 ? "block" : "none"}
-    ></Box>
+      display={cartQuantity > 0 ? "block" : "none"}
+    />
   );
 };
 
@@ -45,7 +46,7 @@ const Header = () => {
     <Container maxW="container.xl" bg="brand.background">
       <HStack alignItems="center" justifyContent="space-between" py="8">
         <Box as={NextLink} href="/">
-          <Image w="200px" src="logo.svg" alt="Logo" />
+          <Image w={{ base: "148px", md: "200px" }} src="logo.svg" alt="Logo" />
         </Box>
         {isMediumBreakpoint ? (
           <>
@@ -69,7 +70,7 @@ const Header = () => {
                 _hover={{ cursor: "pointer" }}
               >
                 <OrderDrawer />
-                <NotificationDot />
+                <NotificationBadge />
               </Box>
             </HStack>
             <Button
@@ -86,7 +87,7 @@ const Header = () => {
           <Menu>
             <MenuButton
               as={IconButton}
-              aria-label="Options"
+              aria-label="Menu button"
               icon={<HamburgerIcon />}
               variant="outline"
               rounded="md"

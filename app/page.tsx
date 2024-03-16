@@ -9,7 +9,12 @@ import Article from "@/components/sections/article";
 export default function Home() {
   return (
     <>
-      <VStack w="100%" h="calc(100vh - 110px)" bg="brand.background" p="4">
+      <VStack
+        w="100%"
+        h={{ base: "calc(100vh - 64px)", md: "calc(100vh - 110px)" }}
+        bg="brand.background"
+        p="4"
+      >
         <HeroSection />
       </VStack>
       <VStack bg="brand.foreground">

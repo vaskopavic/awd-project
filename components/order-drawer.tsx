@@ -31,6 +31,8 @@ const OrderDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     cartItems,
+    cartQuantity,
+    cartTotal,
     decreaseCartQuantity,
     increaseCartQuantity,
     removeFromCart,
@@ -40,7 +42,7 @@ const OrderDrawer = () => {
   const orderRef = useRef<HTMLParagraphElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
 
-  const isCartEmpty = cartItems.length === 0;
+  const isCartEmpty = cartQuantity === 0;
 
   const handleNext = () => {
     if (cartItems.length > 0) {
@@ -77,7 +79,7 @@ const OrderDrawer = () => {
           onClose();
           setStep(1);
 
-          if (cartItems.length > 0) {
+          if (!isCartEmpty) {
             cartItems.forEach((item) => {
               removeFromCart(item);
             });
@@ -104,6 +106,7 @@ const OrderDrawer = () => {
   return (
     <>
       <Text
+        w="full"
         position="relative"
         ref={orderRef}
         onClick={() => {
@@ -140,28 +143,30 @@ const OrderDrawer = () => {
                 />
               )}
               {step === 2 && (
-                <OrderShippingContent cartItems={cartItems} ref={formRef} />
+                <OrderShippingContent
+                  cartItems={cartItems}
+                  cartTotal={cartTotal}
+                  ref={formRef}
+                />
               )}
             </VStack>
           </DrawerBody>
           <DrawerFooter borderTop="1px solid black">
-            <VStack w="full" py="4">
-              <HStack w="full" justifyContent="space-between" py={2}>
+            <VStack w="full" pb="4">
+              <HStack w="full" justifyContent="space-between" py="2">
                 <Text fontSize="md">Delivery fee</Text>
                 <Text fontSize="md">$2.49</Text>
               </HStack>
-              <HStack w="full" justifyContent={"space-between"} pb={12}>
+              <HStack
+                w="full"
+                justifyContent="space-between"
+                pb={{ base: "6", md: "12" }}
+              >
                 <Heading as="p" size="md">
                   TOTAL
                 </Heading>
                 <Heading as="p" size="md">
-                  $
-                  {cartItems
-                    .reduce((total, cartItem) => {
-                      const item = cartItems.find((i) => i.id === cartItem.id);
-                      return total + (item?.price || 0) * cartItem.quantity;
-                    }, 2.49)
-                    .toFixed(2)}
+                  ${cartTotal}
                 </Heading>
               </HStack>
               {step === 1 ? (
@@ -220,14 +225,14 @@ const OrderDetailsContent = ({
             <Image
               src={cartItem.image}
               alt={`${cartItem.name} image`}
-              w="124px"
-              h="124px"
+              w={{ base: "112px", md: "124px" }}
+              h={{ base: "112px", md: "124px" }}
               rounded="lg"
               objectFit="cover"
             />
             <VStack
               w="full"
-              h="124px"
+              h={{ base: "112px", md: "124px" }}
               alignItems="flex-start"
               justifyContent="space-between"
             >
@@ -238,7 +243,7 @@ const OrderDetailsContent = ({
                   </Heading>
                   <Text
                     maxW="220px"
-                    noOfLines={2}
+                    noOfLines={{ base: 1, md: 2 }}
                     size={{ base: "sm", md: "md" }}
                   >
                     {cartItem.description}
@@ -274,6 +279,7 @@ const OrderDetailsContent = ({
                   icon={<DeleteIcon />}
                   aria-label="Delete item"
                   variant="tertiary"
+                  size={{ base: "sm", md: "md" }}
                   rounded="md"
                   onClick={() => removeFromCart(cartItem)}
                 />
@@ -289,8 +295,8 @@ OrderDetailsContent.displayName = "OrderDetailsContent";
 
 const OrderShippingContent = forwardRef<
   HTMLFormElement,
-  { cartItems: CartItem[] }
->(({ cartItems }, ref) => (
+  { cartItems: CartItem[]; cartTotal: number }
+>(({ cartItems, cartTotal }, ref) => (
   <Formik
     innerRef={
       ref as React.Ref<
@@ -313,7 +319,13 @@ const OrderShippingContent = forwardRef<
       zipCode: "",
     }}
     onSubmit={(values, { setStatus, resetForm }) => {
-      console.log(...cartItems, values);
+      const formData = {
+        cartItems: cartItems,
+        cartTotal: cartTotal,
+        formValues: values,
+      };
+
+      console.log(formData);
       resetForm();
       setStatus({ success: true });
     }}
@@ -341,15 +353,29 @@ const OrderShippingContent = forwardRef<
             />
             <FormErrorMessage>{errors.fullName}</FormErrorMessage>
           </FormControl>
-          <FormControl>
-            <FormLabel htmlFor="email">Email</FormLabel>
+          <FormControl isInvalid={!!errors.email && touched.email}>
+            <FormLabel htmlFor="email">Email*</FormLabel>
             <Field
               as={Input}
               id="email"
               name="email"
               type="email"
               variant="outline"
+              validate={(value: string) => {
+                let error;
+
+                if (!value) {
+                  error = "Your email is required!";
+                } else if (
+                  !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
+                ) {
+                  error = "Your email is invalid!";
+                }
+
+                return error;
+              }}
             />
+            <FormErrorMessage>{errors.email}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={!!errors.phone && touched.phone}>
             <FormLabel htmlFor="phone">Phone Number*</FormLabel>
