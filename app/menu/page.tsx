@@ -77,7 +77,6 @@ export default function Page() {
                 return (
                   <Button
                     key={category}
-                    variant="base"
                     fontSize={{ md: "md" }}
                     onClick={() => handleCategoryClick(category)}
                     isActive={isActive}

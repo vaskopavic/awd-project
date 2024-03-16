@@ -50,7 +50,7 @@ const Article = () => {
             combo of a juicy beef patty, melted cheddar, and our secret sauce,
             all nestled in a freshly baked bun.
           </Text>
-          <Button variant="base">more info</Button>
+          <Button>more info</Button>
         </VStack>
       </Stack>
       <Stack
@@ -77,7 +77,7 @@ const Article = () => {
             beef, fresh veggies, and our signature sauce, all wrapped in a warm
             tortilla.
           </Text>
-          <Button variant="base">more info</Button>
+          <Button>more info</Button>
         </VStack>
         <VStack
           flex="1"

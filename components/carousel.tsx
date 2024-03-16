@@ -49,6 +49,8 @@ const Carousel = (props: CarouselProps) => {
     slidesToShow: 3,
     slidesToScroll: 1,
     speed: 500,
+    autoplay: true,
+    autoplaySpeed: 3000,
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,
     responsive: [

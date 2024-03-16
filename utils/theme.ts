@@ -6,6 +6,7 @@ export const theme = extendTheme({
       "html, body": {
         bg: "brand.background",
         color: "brand.black",
+        "--chakra-ui-focus-ring-color": "#eea564",
       },
       ".slick-slide > div": {
         display: "flex",
@@ -51,7 +52,20 @@ export const theme = extendTheme({
           backgroundColor: "brand.baseShade",
         },
       },
+      defaultProps: {
+        variant: "base",
+      },
       variants: {
+        base: () => ({
+          _hover: {
+            color: "brand.white",
+            backgroundColor: "brand.base",
+          },
+          _active: {
+            color: "brand.white",
+            backgroundColor: "brand.baseShade",
+          },
+        }),
         primary: () => ({
           _hover: {
             backgroundColor: "brand.primary",
@@ -87,6 +101,18 @@ export const theme = extendTheme({
             backgroundColor: "blackAlpha.300",
           },
         }),
+      },
+    },
+    Input: {
+      variants: {
+        outline: {
+          field: {
+            _focus: {
+              borderColor: "var(--chakra-ui-focus-ring-color)",
+              boxShadow: "0 0 0 2px var(--chakra-ui-focus-ring-color)",
+            },
+          },
+        },
       },
     },
   },
