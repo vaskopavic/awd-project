@@ -37,36 +37,39 @@ export const ShoppingCartProvider = ({
   );
 
   const cartQuantity = cartItems.reduce(
-    (quantity, item) => item.quantity + quantity,
+    (quantity: number, item: CartItem) => item.quantity + quantity,
     0
   );
 
   const cartTotal = cartItems
-    .reduce((total, item) => item.price * item.quantity + total, 2.49)
+    .reduce(
+      (total: number, item: CartItem) => item.price * item.quantity + total,
+      2.49
+    )
     .toFixed(2) as unknown as number;
 
-  const getItemQuantity = (id: string) => {
-    return cartItems.find((item) => item.id === id)?.quantity || 0;
+  const getItemQuantity = (id: string): number => {
+    return cartItems.find((item: CartItem) => item.id === id)?.quantity || 0;
   };
 
-  const decreaseCartQuantity = (item: CartItem) => {
-    setCartItems((currItems) => {
-      const existingItem = currItems.find((i) => i.id === item.id);
+  const decreaseCartQuantity = (item: CartItem): void => {
+    setCartItems((currItems: CartItem[]) => {
+      const existingItem = currItems.find((i: CartItem) => i.id === item.id);
       if (existingItem && existingItem.quantity > 1) {
-        return currItems.map((i) =>
+        return currItems.map((i: CartItem) =>
           i.id === item.id ? { ...i, quantity: i.quantity - 1 } : i
         );
       } else {
-        return currItems.filter((i) => i.id !== item.id);
+        return currItems.filter((i: CartItem) => i.id !== item.id);
       }
     });
   };
 
-  const increaseCartQuantity = (item: CartItem) => {
-    setCartItems((currItems) => {
-      const existingItem = currItems.find((i) => i.id === item.id);
+  const increaseCartQuantity = (item: CartItem): void => {
+    setCartItems((currItems: CartItem[]) => {
+      const existingItem = currItems.find((i: CartItem) => i.id === item.id);
       if (existingItem) {
-        return currItems.map((i) =>
+        return currItems.map((i: CartItem) =>
           i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
         );
       } else {
@@ -75,9 +78,9 @@ export const ShoppingCartProvider = ({
     });
   };
 
-  const removeFromCart = (item: CartItem) => {
-    setCartItems((currItems) => {
-      return currItems.filter((i) => i.id !== item.id);
+  const removeFromCart = (item: CartItem): void => {
+    setCartItems((currItems: CartItem[]) => {
+      return currItems.filter((i: CartItem) => i.id !== item.id);
     });
   };
 

@@ -1,4 +1,4 @@
-import { useState, useRef, forwardRef } from "react"; // Import forwardRef
+import { useState, useRef, forwardRef } from "react";
 import { Formik, Field, FormikProps } from "formik";
 import {
   Drawer,
@@ -15,7 +15,6 @@ import {
   Image,
   IconButton,
   Button,
-  useDisclosure,
   useToast,
   FormControl,
   FormLabel,
@@ -26,9 +25,16 @@ import { ChevronDownIcon, ChevronUpIcon, DeleteIcon } from "@chakra-ui/icons";
 
 import { useShoppingCart } from "@/providers/shopping-cart-provider";
 
-const OrderDrawer = () => {
+const OrderDrawer = ({
+  isOpen,
+  onOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}) => {
   const [step, setStep] = useState(1);
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     cartItems,
     cartQuantity,
@@ -39,7 +45,6 @@ const OrderDrawer = () => {
   } = useShoppingCart();
   const toast = useToast();
 
-  const orderRef = useRef<HTMLParagraphElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
 
   const isCartEmpty = cartQuantity === 0;
@@ -108,7 +113,6 @@ const OrderDrawer = () => {
       <Text
         w="full"
         position="relative"
-        ref={orderRef}
         onClick={() => {
           onOpen();
           setStep(1);
@@ -116,13 +120,7 @@ const OrderDrawer = () => {
       >
         my order
       </Text>
-      <Drawer
-        isOpen={isOpen}
-        placement="right"
-        onClose={onClose}
-        finalFocusRef={orderRef}
-        size="md"
-      >
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="md">
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader bg="brand.background" mb="4">

@@ -9,12 +9,14 @@ import {
   Text,
   Image,
   Icon,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { FaFacebook, FaInstagram, FaXTwitter } from "react-icons/fa6";
 
 import OrderDrawer from "./order-drawer";
 
 const Footer = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Container maxW="container.xl" bg="brand.background">
       <HStack
@@ -40,7 +42,7 @@ const Footer = () => {
               fontSize={{ md: "lg", lg: "xl" }}
               _hover={{ cursor: "pointer" }}
             >
-              <OrderDrawer />
+              <OrderDrawer isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
             </Box>
             <Box as={NextLink} href="/menu" fontSize={{ md: "lg", lg: "xl" }}>
               menu

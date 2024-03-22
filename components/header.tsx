@@ -5,7 +5,6 @@ import {
   Container,
   HStack,
   Box,
-  Badge,
   Button,
   Image,
   Menu,
@@ -13,34 +12,25 @@ import {
   IconButton,
   MenuList,
   MenuItem,
+  useMediaQuery,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import { FaBasketShopping } from "react-icons/fa6";
 
 import OrderDrawer from "./order-drawer";
+import NotificationBadge from "./notification-badge";
 
 import { useShoppingCart } from "@/providers/shopping-cart-provider";
 
-import useMediaQuery from "@/hooks/use-media-query";
-
-const NotificationBadge = () => {
-  const { cartQuantity } = useShoppingCart();
-
-  return (
-    <Badge
-      position="absolute"
-      top="8%"
-      right="-8%"
-      width="8px"
-      height="8px"
-      bg="brand.primaryShade"
-      rounded="full"
-      display={cartQuantity > 0 ? "block" : "none"}
-    />
-  );
-};
-
 const Header = () => {
-  const isMediumBreakpoint = useMediaQuery(768);
+  const { cartQuantity } = useShoppingCart();
+  const [isLargerThanMedium] = useMediaQuery("(min-width: 768px)", {
+    ssr: true,
+    fallback: true,
+  });
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Container maxW="container.xl" bg="brand.background">
@@ -48,7 +38,7 @@ const Header = () => {
         <Box as={NextLink} href="/">
           <Image w={{ base: "148px", md: "200px" }} src="logo.svg" alt="Logo" />
         </Box>
-        {isMediumBreakpoint ? (
+        {isLargerThanMedium ? (
           <>
             <HStack
               gap={{ md: "8", lg: "16" }}
@@ -69,8 +59,15 @@ const Header = () => {
                 fontSize={{ md: "xl", lg: "2xl" }}
                 _hover={{ cursor: "pointer" }}
               >
-                <OrderDrawer />
-                <NotificationBadge />
+                <OrderDrawer
+                  isOpen={isOpen}
+                  onOpen={onOpen}
+                  onClose={onClose}
+                />
+                <NotificationBadge
+                  initialCartQuantity={cartQuantity}
+                  isLargerThanMedium={isLargerThanMedium}
+                />
               </Box>
             </HStack>
             <Button
@@ -84,49 +81,81 @@ const Header = () => {
             </Button>
           </>
         ) : (
-          <Menu>
-            <MenuButton
-              as={IconButton}
-              aria-label="Menu button"
-              icon={<HamburgerIcon />}
-              variant="outline"
-              rounded="md"
-              _hover={{ bg: "brand.foreground" }}
-              _active={{ bg: "brand.foreground" }}
-            />
-            <MenuList bg="brand.foreground">
-              <MenuItem
-                as={NextLink}
-                href="/"
-                bg="brand.foreground"
-                _hover={{ bg: "brand.background" }}
-              >
-                home
-              </MenuItem>
-              <MenuItem
-                as={NextLink}
-                href="/about"
-                bg="brand.foreground"
-                _hover={{ bg: "brand.background" }}
-              >
-                about
-              </MenuItem>
-              <MenuItem
-                bg="brand.foreground"
-                _hover={{ cursor: "pointer", bg: "brand.background" }}
-              >
-                <OrderDrawer />
-              </MenuItem>
-              <MenuItem
-                as={NextLink}
-                href="/menu"
-                bg="brand.foreground"
-                _hover={{ bg: "brand.background" }}
-              >
-                menu
-              </MenuItem>
-            </MenuList>
-          </Menu>
+          <HStack gap="3">
+            <HStack position="relative">
+              <IconButton
+                aria-label="Cart button"
+                icon={<FaBasketShopping />}
+                fontSize="18px"
+                rounded="md"
+                bg="brand.secondary"
+                color="brand.base"
+                border="brand.secondary"
+                _hover={{
+                  bg: "brand.secondaryShade",
+                  border: "brand.secondaryShade",
+                }}
+                _active={{
+                  bg: "brand.secondaryShade",
+                  border: "brand.secondaryShade",
+                }}
+                onClick={() => {
+                  onOpen();
+                }}
+              />
+              <NotificationBadge
+                initialCartQuantity={cartQuantity}
+                isLargerThanMedium={isLargerThanMedium}
+              />
+            </HStack>
+            <Menu>
+              <MenuButton
+                as={IconButton}
+                aria-label="Menu button"
+                icon={<HamburgerIcon />}
+                variant="outline"
+                rounded="md"
+                _hover={{ bg: "brand.foreground" }}
+                _active={{ bg: "brand.foreground" }}
+              />
+              <MenuList bg="brand.foreground">
+                <MenuItem
+                  as={NextLink}
+                  href="/"
+                  bg="brand.foreground"
+                  _hover={{ bg: "brand.background" }}
+                >
+                  home
+                </MenuItem>
+                <MenuItem
+                  as={NextLink}
+                  href="/about"
+                  bg="brand.foreground"
+                  _hover={{ bg: "brand.background" }}
+                >
+                  about
+                </MenuItem>
+                <MenuItem
+                  bg="brand.foreground"
+                  _hover={{ cursor: "pointer", bg: "brand.background" }}
+                >
+                  <OrderDrawer
+                    isOpen={isOpen}
+                    onOpen={onOpen}
+                    onClose={onClose}
+                  />
+                </MenuItem>
+                <MenuItem
+                  as={NextLink}
+                  href="/menu"
+                  bg="brand.foreground"
+                  _hover={{ bg: "brand.background" }}
+                >
+                  menu
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </HStack>
         )}
       </HStack>
     </Container>
