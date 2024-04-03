@@ -1,7 +1,33 @@
 import NextLink from "next/link";
-import { Stack, VStack, Heading, Text, Button, Image } from "@chakra-ui/react";
+import {
+  Stack,
+  VStack,
+  Heading,
+  Text,
+  Button,
+  Image,
+  keyframes,
+} from "@chakra-ui/react";
 
 const HeroSection = () => {
+  const slideInFromLeft = keyframes`
+  0% {
+    transform: translateX(-10%); opacity: 0;
+  }
+  100%: {
+    transform: "translateX(0); opacity: 1;
+  }`;
+  const slideInFromRight = keyframes`
+  0% {
+    transform: translateX(10%); opacity: 0;
+  }
+  100%: {
+    transform: "translateX(0); opacity: 1;
+  }`;
+
+  const smoothEnterRight = `${slideInFromRight} 1s ease-out`;
+  const smoothEnterLeft = `${slideInFromLeft} 1s ease-out`;
+
   return (
     <Stack
       h="100%"
@@ -10,7 +36,7 @@ const HeroSection = () => {
       justifyContent="center"
       gap="4"
     >
-      <VStack textAlign="center">
+      <VStack animation={smoothEnterLeft} textAlign="center">
         <Heading as="h1" size={{ base: "xl", md: "2xl", lg: "3xl" }}>
           THE GODMOTHER
         </Heading>
@@ -28,6 +54,7 @@ const HeroSection = () => {
         </Button>
       </VStack>
       <Image
+        animation={smoothEnterRight}
         src="hero.png"
         alt="Hand reaching for a burger"
         w={{ base: "35vh", md: "40vh", lg: "60vh" }}
