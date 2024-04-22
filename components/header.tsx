@@ -41,7 +41,7 @@ const Header = () => {
       bg="brand.background"
     >
       <Container maxW="container.xl">
-        <HStack alignItems="center" justifyContent="space-between" py="8">
+        <HStack alignItems="center" justifyContent="space-between" py="6">
           <Box as={NextLink} href="/">
             <Image
               w={{ base: "148px", md: "200px" }}

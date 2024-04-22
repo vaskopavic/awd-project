@@ -5,9 +5,11 @@ import {
   Button,
   Image,
   useToast,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import { useShoppingCart } from "@/providers/shopping-cart-provider";
+import CardModal from "./card-modal";
 
 interface CardProps {
   data: IMenu;
@@ -16,6 +18,7 @@ interface CardProps {
 const Card = (props: CardProps) => {
   const { name, description, image, price } = props.data;
   const { increaseCartQuantity } = useShoppingCart();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
   const handleAddToOrder = () => {
@@ -51,7 +54,10 @@ const Card = (props: CardProps) => {
         objectFit="cover"
         rounded="xl"
         mb="2"
+        _hover={{ cursor: "pointer" }}
+        onClick={onOpen}
       />
+      <CardModal isOpen={isOpen} onClose={onClose} data={props.data} />
       <Stack w="full" direction="column" alignItems="start">
         <Stack
           w="full"
